@@ -98,6 +98,16 @@
 </head>
 <body class="antialiased text-gray-800 bg-white">
 
+<!-- NETLIFY FORM DETECTION -->
+<form name="postulacion" netlify netlify-honeypot="bot-field" hidden>
+  <input type="text" name="nombre"/>
+  <input type="email" name="email"/>
+  <input type="tel" name="telefono"/>
+  <input type="text" name="puesto"/>
+  <input type="text" name="puesto_seleccionado"/>
+  <input type="file" name="cv"/>
+  <textarea name="mensaje"></textarea>
+</form>
 <!-- CURSOR -->
 <div id="cur"></div>
 <div id="cur-ring"></div>
