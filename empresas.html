@@ -1,0 +1,593 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Soluciones para Empresas — Recluta UY</title>
+  <meta name="description" content="Outsourcing de personal, reclutamiento y selección para empresas en Uruguay. Recluta UY."/>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            primary: '#AF9DEA',
+            dark: '#003D44',
+            darkalt: '#005A62',
+          }
+        }
+      }
+    };
+  </script>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap');
+    body { font-family: 'Plus Jakarta Sans', sans-serif; }
+
+    /* ── CURSOR ── */
+    * { cursor: none !important; }
+    #cur { position:fixed;width:10px;height:10px;background:#AF9DEA;border-radius:50%;pointer-events:none;z-index:9999;transform:translate(-50%,-50%);transition:width .15s,height .15s,background .2s; }
+    #cur-ring { position:fixed;width:38px;height:38px;border:1.5px solid rgba(175,157,234,.4);border-radius:50%;pointer-events:none;z-index:9998;transform:translate(-50%,-50%); }
+
+    /* ── SCROLL REVEAL ── */
+    .sr { opacity:0;transform:translateY(32px);transition:opacity .7s cubic-bezier(.22,1,.36,1),transform .7s cubic-bezier(.22,1,.36,1); }
+    .sr.in { opacity:1;transform:translateY(0); }
+    .d1{transition-delay:.08s}.d2{transition-delay:.16s}.d3{transition-delay:.24s}
+
+    /* ── HERO ── */
+    .hero-left > * { opacity:0;animation:heroUp .9s cubic-bezier(.22,1,.36,1) forwards; }
+    .hero-left > *:nth-child(1){animation-delay:.1s}
+    .hero-left > *:nth-child(2){animation-delay:.22s}
+    .hero-left > *:nth-child(3){animation-delay:.36s}
+    .hero-left > *:nth-child(4){animation-delay:.5s}
+    .hero-left > *:nth-child(5){animation-delay:.62s}
+    @keyframes heroUp { from{opacity:0;transform:translateY(28px)} to{opacity:1;transform:translateY(0)} }
+
+    .hero-form-wrap { opacity:0;animation:heroIn .9s .45s cubic-bezier(.22,1,.36,1) forwards; }
+    @keyframes heroIn { from{opacity:0;transform:translateX(36px)} to{opacity:1;transform:translateX(0)} }
+
+    /* ── HEADER LINE ── */
+    .header-line { height:2px;background:linear-gradient(90deg,transparent,#AF9DEA,#005A62,transparent);background-size:200% 100%;animation:shimmer 3s linear infinite; }
+    @keyframes shimmer { 0%{background-position:200% 0} 100%{background-position:-200% 0} }
+
+    /* ── PARTICLES ── */
+    .particle { position:absolute;border-radius:50%;pointer-events:none;animation:drift linear infinite; }
+    @keyframes drift {
+      0%   { transform:translateY(0) translateX(0) scale(1); opacity:.6 }
+      50%  { transform:translateY(-60px) translateX(20px) scale(1.2); opacity:.3 }
+      100% { transform:translateY(0) translateX(0) scale(1); opacity:.6 }
+    }
+
+    /* ── HERO FORM INPUTS ── */
+    .hf-input { width:100%;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.12);border-radius:8px;padding:10px 13px;font-family:'Plus Jakarta Sans',sans-serif;font-size:.875rem;color:#fff;outline:none;transition:all .2s; }
+    .hf-input::placeholder { color:rgba(255,255,255,.3); }
+    .hf-input:focus { border-color:#AF9DEA;background:rgba(255,255,255,.1); }
+    .hf-select { width:100%;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.12);border-radius:8px;padding:10px 13px;font-family:'Plus Jakarta Sans',sans-serif;font-size:.875rem;color:rgba(255,255,255,.6);outline:none;transition:all .2s;appearance:none;cursor:pointer; }
+    .hf-select option { background:#003D44;color:#fff; }
+    .hf-select:focus { border-color:#AF9DEA; }
+
+    /* ── SVC CARDS ── */
+    .svc-card { transition:transform .3s cubic-bezier(.22,1,.36,1),box-shadow .3s,border-color .3s;position:relative;overflow:hidden; }
+    .svc-card::after { content:'';position:absolute;bottom:0;left:0;right:0;height:3px;background:linear-gradient(90deg,#005A62,#AF9DEA);transform:scaleX(0);transform-origin:left;transition:transform .35s ease; }
+    .svc-card:hover { transform:translateY(-7px);box-shadow:0 24px 48px rgba(0,0,0,.1);border-color:#AF9DEA; }
+    .svc-card:hover::after { transform:scaleX(1); }
+    .svc-icon { transition:transform .4s cubic-bezier(.22,1,.36,1),background .3s; }
+    .svc-card:hover .svc-icon { transform:scale(1.15) rotate(5deg);background:rgba(175,157,234,.2); }
+
+    /* ── PROCESO ── */
+    .proc-step { opacity:0;transform:translateY(20px);transition:all .55s ease; }
+    .proc-step.in { opacity:1;transform:translateY(0); }
+
+    /* ── FORM ── */
+    .form-input { transition:border-color .2s,box-shadow .2s,transform .15s; }
+    .form-input:focus { transform:translateY(-1px); }
+    .btn-submit { position:relative;overflow:hidden;transition:transform .2s,box-shadow .2s; }
+    .btn-submit::after { content:'';position:absolute;inset:0;background:linear-gradient(120deg,transparent 0%,rgba(255,255,255,.15) 50%,transparent 100%);transform:translateX(-100%);transition:transform .5s; }
+    .btn-submit:hover { transform:translateY(-2px);box-shadow:0 12px 32px rgba(0,61,68,.3); }
+    .btn-submit:hover::after { transform:translateX(100%); }
+
+    /* ── NAV LINK ── */
+    .nav-link { position:relative; }
+    .nav-link::after { content:'';position:absolute;bottom:-2px;left:0;width:0;height:1.5px;background:#AF9DEA;transition:width .25s cubic-bezier(.22,1,.36,1); }
+    .nav-link:hover::after { width:100%; }
+
+    /* ── SCROLL TOP ── */
+    #scrollTop { position:fixed;bottom:32px;right:32px;width:44px;height:44px;background:#005A62;color:#fff;border:none;border-radius:50%;display:flex;align-items:center;justify-content:center;z-index:200;opacity:0;transform:translateY(12px);transition:opacity .3s,transform .3s;pointer-events:none; }
+    #scrollTop.show { opacity:1;transform:translateY(0);pointer-events:auto; }
+    #scrollTop:hover { background:#003D44; }
+
+    /* ── GLOW ── */
+    .glow-badge { animation:glowPulse 2.5s ease-in-out infinite; }
+    @keyframes glowPulse { 0%,100%{box-shadow:0 0 0 0 rgba(175,157,234,.4)} 50%{box-shadow:0 0 0 8px rgba(175,157,234,0)} }
+
+    /* ── FT LINK ── */
+    .ft-link { transition:color .2s,transform .2s;display:inline-block; }
+    .ft-link:hover { color:#AF9DEA;transform:translateX(4px); }
+
+    /* ── LOGO ── */
+    .logo-img { transition:transform .3s cubic-bezier(.22,1,.36,1); }
+    .logo-img:hover { transform:scale(1.05); }
+
+    /* ── DIVIDER ── */
+    .divider { height:1px;background:linear-gradient(90deg,transparent,#e5e7eb,transparent); }
+
+    /* Float badge */
+    @keyframes float { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-8px)} }
+  </style>
+</head>
+<body class="antialiased text-gray-800 bg-white">
+
+<!-- CURSOR -->
+<div id="cur"></div>
+<div id="cur-ring"></div>
+
+<!-- SCROLL TOP -->
+<button id="scrollTop" onclick="window.scrollTo({top:0,behavior:'smooth'})">
+  <svg width="18" height="18" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 15l7-7 7 7"/></svg>
+</button>
+
+<!-- HEADER -->
+<header class="sticky top-0 z-50 bg-white/95 backdrop-blur border-b border-gray-100 shadow-sm">
+  <div class="container mx-auto flex items-center justify-between h-16 px-6">
+    <a href="https://recluta.uy">
+      <img src="https://d2xsxph8kpxj0f.cloudfront.net/310519663412657124/DRFgXDJSgT4odHDqY8umud/recluta-logo_f8985dca.png" alt="Recluta UY" class="h-8 logo-img"/>
+    </a>
+    <nav class="hidden md:flex gap-8 text-sm font-semibold">
+      <a href="#servicios" class="text-gray-700 nav-link">Servicios</a>
+      <a href="#proceso" class="text-gray-700 nav-link">Proceso</a>
+      <a href="#contacto" class="text-gray-700 nav-link">Contacto</a>
+    </nav>
+    <a href="#contacto" class="hidden md:inline-block bg-darkalt hover:bg-dark text-white px-5 py-2 rounded-lg text-sm font-semibold shadow transition-all duration-200 hover:-translate-y-0.5">
+      Solicitar consulta →
+    </a>
+  </div>
+  <div class="header-line"></div>
+</header>
+
+<!-- HERO -->
+<section class="relative overflow-hidden bg-gradient-to-br from-darkalt via-dark to-[#001D20] text-white min-h-[92vh] flex items-center">
+  <img src="https://d2xsxph8kpxj0f.cloudfront.net/310519663412657124/DRFgXDJSgT4odHDqY8umud/hero-b2b-recluta-g9RgEwrSiU7i5j4H7pikMm.webp" alt="" class="absolute inset-0 w-full h-full object-cover opacity-15"/>
+  <div id="particles" class="absolute inset-0 pointer-events-none"></div>
+  <div class="absolute inset-0 opacity-5" style="background-image:linear-gradient(rgba(175,157,234,.5) 1px,transparent 1px),linear-gradient(90deg,rgba(175,157,234,.5) 1px,transparent 1px);background-size:56px 56px"></div>
+
+  <div class="relative z-10 container mx-auto px-6 py-24 grid md:grid-cols-2 gap-16 items-center">
+
+    <!-- Izquierda — copy -->
+    <div class="hero-left">
+      <div class="inline-flex items-center gap-2 mb-5">
+        <span class="w-2 h-2 bg-primary rounded-full glow-badge"></span>
+        <span class="text-primary uppercase text-xs font-bold tracking-widest">Soluciones B2B · Uruguay</span>
+      </div>
+      <h1 class="text-4xl md:text-5xl font-extrabold leading-tight mb-5">
+        El talento que<br/>tu empresa<br/>
+        <span class="text-primary">necesita</span>
+      </h1>
+      <p class="text-lg text-white/75 leading-relaxed font-light mb-8 max-w-md">
+        Reclutamiento, selección y outsourcing de personal para empresas en Uruguay. Procesos ágiles, candidatos calificados, resultados garantizados.
+      </p>
+      <!-- Stats -->
+      <div class="flex gap-8 pt-6 border-t border-white/10">
+        <div>
+          <div class="text-3xl font-extrabold counter" data-target="370">0</div>
+          <div class="text-white/45 text-xs mt-1 uppercase tracking-wider">Empresas clientes</div>
+          <div class="h-0.5 bg-white/10 rounded-full mt-2 overflow-hidden"><div class="progress-fill h-full bg-gradient-to-r from-darkalt to-primary rounded-full w-0 transition-all duration-1000" data-width="92%"></div></div>
+        </div>
+        <div>
+          <div class="text-3xl font-extrabold counter" data-target="1000">0</div>
+          <div class="text-white/45 text-xs mt-1 uppercase tracking-wider">Colocados</div>
+          <div class="h-0.5 bg-white/10 rounded-full mt-2 overflow-hidden"><div class="progress-fill h-full bg-gradient-to-r from-darkalt to-primary rounded-full w-0 transition-all duration-1000" data-width="100%"></div></div>
+        </div>
+        <div>
+          <div class="text-3xl font-extrabold counter" data-target="98">0</div>
+          <div class="text-white/45 text-xs mt-1 uppercase tracking-wider">% Satisfacción</div>
+          <div class="h-0.5 bg-white/10 rounded-full mt-2 overflow-hidden"><div class="progress-fill h-full bg-gradient-to-r from-darkalt to-primary rounded-full w-0 transition-all duration-1000" data-width="98%"></div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Derecha — formulario en hero -->
+    <div class="hero-form-wrap">
+      <div class="relative">
+        <div class="absolute inset-0 bg-gradient-to-br from-primary/20 to-transparent rounded-2xl blur-2xl"></div>
+        <div class="relative bg-white/10 backdrop-blur border border-white/20 rounded-2xl p-7">
+          <!-- Badge flotante -->
+          <div class="absolute -top-4 -right-4 bg-darkalt border border-primary/30 rounded-xl px-4 py-2 text-center" style="animation:float 3s ease-in-out infinite">
+            <div class="text-xl font-extrabold text-white">15d</div>
+            <div class="text-primary text-xs font-bold uppercase tracking-wider">Colocación</div>
+          </div>
+          <div class="flex items-center gap-2 mb-4">
+            <span class="w-2 h-2 bg-primary rounded-full glow-badge"></span>
+            <span class="text-primary text-xs font-bold uppercase tracking-widest">Consulta sin compromiso</span>
+          </div>
+          <h3 class="text-xl font-extrabold text-white mb-1">Hablemos sobre tu empresa</h3>
+          <p class="text-white/50 text-sm font-light mb-5">Respondemos en menos de 24 horas hábiles.</p>
+
+          <div id="heroFormWrap">
+            <form id="heroForm" name="leads-b2b-hero" netlify method="POST">
+              <input type="hidden" name="form-name" value="leads-b2b-hero"/>
+              <div class="grid grid-cols-2 gap-3 mb-3">
+                <input type="text" name="empresa" placeholder="Empresa" required class="hf-input"/>
+                <input type="text" name="cargo" placeholder="Tu cargo" required class="hf-input"/>
+              </div>
+              <div class="mb-3">
+                <input type="email" name="email" placeholder="Email corporativo" required class="hf-input"/>
+              </div>
+              <div class="mb-3">
+                <input type="tel" name="telefono" placeholder="Teléfono" class="hf-input"/>
+              </div>
+              <div class="mb-4">
+                <select name="servicio" required class="hf-select">
+                  <option value="">Servicio de interés</option>
+                  <option>Reclutamiento y Selección</option>
+                  <option>Outsourcing de Personal</option>
+                  <option>Evaluación de Competencias</option>
+                  <option>No estoy seguro aún</option>
+                </select>
+              </div>
+              <button type="submit" class="btn-submit w-full bg-primary hover:bg-purple-300 text-[#48316D] font-bold py-3 rounded-lg text-sm">
+                Solicitar consulta gratuita →
+              </button>
+              <p class="text-center text-xs text-white/30 mt-3">Sin compromiso · Respondemos en &lt;24hs</p>
+            </form>
+          </div>
+          <div id="heroFormOk" class="hidden text-center py-6">
+            <div class="w-12 h-12 bg-green-500/20 border border-green-500/30 rounded-full flex items-center justify-center mx-auto mb-3">
+              <svg class="w-6 h-6 text-green-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+            </div>
+            <h4 class="text-white font-bold text-lg mb-1">¡Consulta recibida!</h4>
+            <p class="text-white/45 text-sm font-light">Te contactamos en menos de 24 horas hábiles.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Wave -->
+  <div class="absolute bottom-0 left-0 right-0">
+    <svg viewBox="0 0 1440 48" fill="none" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
+      <path d="M0 48L1440 48L1440 16C1200 48 720 0 0 32L0 48Z" fill="white"/>
+    </svg>
+  </div>
+</section>
+
+<!-- TRUST BAR -->
+<div class="bg-gray-50 border-b border-gray-100 py-4">
+  <div class="container mx-auto px-6 flex flex-wrap items-center gap-6 justify-center md:justify-between">
+    <span class="text-xs font-bold uppercase tracking-widest text-gray-400">Por qué elegirnos</span>
+    <div class="flex flex-wrap gap-6">
+      <div class="flex items-center gap-2 text-sm text-gray-600 font-medium sr d1"><span class="w-2 h-2 bg-primary rounded-full"></span>Colocación en 15–30 días</div>
+      <div class="flex items-center gap-2 text-sm text-gray-600 font-medium sr d2"><span class="w-2 h-2 bg-primary rounded-full"></span>Garantía de reposición</div>
+      <div class="flex items-center gap-2 text-sm text-gray-600 font-medium sr d3"><span class="w-2 h-2 bg-primary rounded-full"></span>+1.000 candidatos evaluados</div>
+      <div class="flex items-center gap-2 text-sm text-gray-600 font-medium sr"><span class="w-2 h-2 bg-primary rounded-full"></span>Especialistas en Uruguay</div>
+    </div>
+  </div>
+</div>
+
+<!-- SERVICIOS -->
+<section id="servicios" class="container mx-auto px-6 py-20">
+  <div class="text-center mb-14 sr">
+    <span class="text-xs font-bold uppercase tracking-widest text-primary mb-3 block">Lo que hacemos</span>
+    <h2 class="text-3xl md:text-4xl font-extrabold mb-4">Soluciones completas de RRHH</h2>
+    <p class="text-gray-500 max-w-xl mx-auto font-light">Desde la búsqueda hasta la incorporación, cubrimos cada etapa del proceso para que vos te enfoques en tu negocio.</p>
+  </div>
+  <div class="grid gap-6 md:grid-cols-3">
+    <div class="svc-card bg-white border border-gray-200 rounded-2xl shadow-sm p-8 sr d1">
+      <div class="svc-icon w-12 h-12 bg-primary/10 rounded-2xl flex items-center justify-center mb-5">
+        <svg class="w-6 h-6 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+      </div>
+      <div class="text-xs font-bold uppercase tracking-wider text-gray-300 mb-3">01</div>
+      <h3 class="text-lg font-bold mb-3">Reclutamiento y Selección</h3>
+      <p class="text-gray-500 text-sm font-light leading-relaxed mb-4">Identificamos, evaluamos y presentamos al candidato ideal. Garantía de satisfacción y reposición sin costo.</p>
+      <ul class="space-y-2">
+        <li class="flex items-center gap-2 text-sm text-gray-600"><span class="w-1.5 h-1.5 bg-primary rounded-full flex-shrink-0"></span>Búsqueda activa y pasiva</li>
+        <li class="flex items-center gap-2 text-sm text-gray-600"><span class="w-1.5 h-1.5 bg-primary rounded-full flex-shrink-0"></span>Entrevistas estructuradas</li>
+        <li class="flex items-center gap-2 text-sm text-gray-600"><span class="w-1.5 h-1.5 bg-primary rounded-full flex-shrink-0"></span>Evaluación técnica y psicológica</li>
+        <li class="flex items-center gap-2 text-sm text-gray-600"><span class="w-1.5 h-1.5 bg-primary rounded-full flex-shrink-0"></span>Garantía de reposición</li>
+      </ul>
+    </div>
+    <div class="svc-card bg-white border border-gray-200 rounded-2xl shadow-sm p-8 sr d2">
+      <div class="svc-icon w-12 h-12 bg-primary/10 rounded-2xl flex items-center justify-center mb-5">
+        <svg class="w-6 h-6 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+      </div>
+      <div class="text-xs font-bold uppercase tracking-wider text-gray-300 mb-3">02</div>
+      <h3 class="text-lg font-bold mb-3">Outsourcing de Personal</h3>
+      <p class="text-gray-500 text-sm font-light leading-relaxed mb-4">Personal calificado para proyectos temporales, refuerzos estacionales o reemplazos. Sin complicaciones administrativas.</p>
+      <ul class="space-y-2">
+        <li class="flex items-center gap-2 text-sm text-gray-600"><span class="w-1.5 h-1.5 bg-primary rounded-full flex-shrink-0"></span>Personal temporal y permanente</li>
+        <li class="flex items-center gap-2 text-sm text-gray-600"><span class="w-1.5 h-1.5 bg-primary rounded-full flex-shrink-0"></span>Gestión administrativa incluida</li>
+        <li class="flex items-center gap-2 text-sm text-gray-600"><span class="w-1.5 h-1.5 bg-primary rounded-full flex-shrink-0"></span>Cobertura de vacaciones</li>
+        <li class="flex items-center gap-2 text-sm text-gray-600"><span class="w-1.5 h-1.5 bg-primary rounded-full flex-shrink-0"></span>Soluciones por industria</li>
+      </ul>
+    </div>
+    <div class="svc-card bg-white border border-gray-200 rounded-2xl shadow-sm p-8 sr d3">
+      <div class="svc-icon w-12 h-12 bg-primary/10 rounded-2xl flex items-center justify-center mb-5">
+        <svg class="w-6 h-6 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"/></svg>
+      </div>
+      <div class="text-xs font-bold uppercase tracking-wider text-gray-300 mb-3">03</div>
+      <h3 class="text-lg font-bold mb-3">Evaluación de Competencias</h3>
+      <p class="text-gray-500 text-sm font-light leading-relaxed mb-4">Tests psicotécnicos y evaluaciones especializadas para garantizar el mejor fit entre candidato y empresa.</p>
+      <ul class="space-y-2">
+        <li class="flex items-center gap-2 text-sm text-gray-600"><span class="w-1.5 h-1.5 bg-primary rounded-full flex-shrink-0"></span>Tests psicométricos validados</li>
+        <li class="flex items-center gap-2 text-sm text-gray-600"><span class="w-1.5 h-1.5 bg-primary rounded-full flex-shrink-0"></span>Evaluaciones técnicas por rubro</li>
+        <li class="flex items-center gap-2 text-sm text-gray-600"><span class="w-1.5 h-1.5 bg-primary rounded-full flex-shrink-0"></span>Análisis de fit cultural</li>
+        <li class="flex items-center gap-2 text-sm text-gray-600"><span class="w-1.5 h-1.5 bg-primary rounded-full flex-shrink-0"></span>Reportes ejecutivos</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<div class="divider container mx-auto px-6"></div>
+
+<!-- PROCESO -->
+<section id="proceso" class="container mx-auto px-6 py-20">
+  <div class="text-center mb-14 sr">
+    <span class="text-xs font-bold uppercase tracking-widest text-primary mb-3 block">Cómo trabajamos</span>
+    <h2 class="text-3xl md:text-4xl font-extrabold">Un proceso simple y transparente</h2>
+  </div>
+  <div class="grid grid-cols-2 md:grid-cols-4 gap-8" id="procSteps">
+    <div class="proc-step text-center">
+      <div class="w-14 h-14 border-2 border-primary/30 rounded-full flex items-center justify-center mx-auto mb-5 bg-white shadow-sm">
+        <span class="text-primary font-bold text-lg">01</span>
+      </div>
+      <h4 class="font-bold text-gray-900 mb-2">Consulta inicial</h4>
+      <p class="text-sm text-gray-500 font-light leading-relaxed">Entendemos tu necesidad y el perfil buscado en 30 minutos.</p>
+    </div>
+    <div class="proc-step text-center">
+      <div class="w-14 h-14 border-2 border-primary/30 rounded-full flex items-center justify-center mx-auto mb-5 bg-white shadow-sm">
+        <span class="text-primary font-bold text-lg">02</span>
+      </div>
+      <h4 class="font-bold text-gray-900 mb-2">Búsqueda activa</h4>
+      <p class="text-sm text-gray-500 font-light leading-relaxed">Activamos nuestra base de candidatos y canales especializados.</p>
+    </div>
+    <div class="proc-step text-center">
+      <div class="w-14 h-14 border-2 border-primary/30 rounded-full flex items-center justify-center mx-auto mb-5 bg-white shadow-sm">
+        <span class="text-primary font-bold text-lg">03</span>
+      </div>
+      <h4 class="font-bold text-gray-900 mb-2">Presentación</h4>
+      <p class="text-sm text-gray-500 font-light leading-relaxed">3–5 candidatos evaluados con informe detallado. Vos elegís.</p>
+    </div>
+    <div class="proc-step text-center">
+      <div class="w-14 h-14 border-2 border-primary/30 rounded-full flex items-center justify-center mx-auto mb-5 bg-white shadow-sm">
+        <span class="text-primary font-bold text-lg">04</span>
+      </div>
+      <h4 class="font-bold text-gray-900 mb-2">Colocación</h4>
+      <p class="text-sm text-gray-500 font-light leading-relaxed">Acompañamos el onboarding. Si no funciona, lo reemplazamos.</p>
+    </div>
+  </div>
+</section>
+
+<div class="divider container mx-auto px-6"></div>
+
+<!-- CONTACTO FINAL -->
+<section id="contacto" class="bg-gradient-to-br from-gray-50 to-gray-100 py-20">
+  <div class="container mx-auto px-6">
+    <div class="max-w-5xl mx-auto grid md:grid-cols-2 gap-16 items-center">
+
+      <!-- Izquierda -->
+      <div class="sr">
+        <span class="text-xs font-bold uppercase tracking-widest text-primary mb-3 block">Contacto</span>
+        <h2 class="text-3xl md:text-4xl font-extrabold mb-4">¿Listo para encontrar al candidato ideal?</h2>
+        <p class="text-gray-500 font-light leading-relaxed mb-8">Contactanos hoy y te mostramos cómo optimizar tu proceso de contratación. Sin compromiso.</p>
+        <ul class="space-y-4">
+          <li class="flex items-center gap-3 text-gray-600">
+            <div class="w-8 h-8 bg-primary/10 rounded-full flex items-center justify-center flex-shrink-0">
+              <svg class="w-4 h-4 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+            </div>
+            <span class="text-sm font-medium">Sin compromiso inicial</span>
+          </li>
+          <li class="flex items-center gap-3 text-gray-600">
+            <div class="w-8 h-8 bg-primary/10 rounded-full flex items-center justify-center flex-shrink-0">
+              <svg class="w-4 h-4 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+            </div>
+            <span class="text-sm font-medium">Respuesta en menos de 24 horas</span>
+          </li>
+          <li class="flex items-center gap-3 text-gray-600">
+            <div class="w-8 h-8 bg-primary/10 rounded-full flex items-center justify-center flex-shrink-0">
+              <svg class="w-4 h-4 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+            </div>
+            <span class="text-sm font-medium">Especialistas en mercado uruguayo</span>
+          </li>
+          <li class="flex items-center gap-3 text-gray-600">
+            <div class="w-8 h-8 bg-primary/10 rounded-full flex items-center justify-center flex-shrink-0">
+              <svg class="w-4 h-4 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+            </div>
+            <span class="text-sm font-medium">Garantía de reposición incluida</span>
+          </li>
+        </ul>
+      </div>
+
+      <!-- Formulario final -->
+      <div class="sr d1">
+        <div id="ctaFormWrap" class="bg-white rounded-2xl shadow-lg border border-gray-100 p-8">
+          <h3 class="text-xl font-extrabold text-gray-900 mb-1">Hablemos sobre tu empresa</h3>
+          <p class="text-gray-400 text-sm font-light mb-6">Un especialista te contacta en menos de 24 horas.</p>
+          <form id="ctaForm" name="leads-b2b-cta" netlify method="POST">
+            <input type="hidden" name="form-name" value="leads-b2b-cta"/>
+            <div class="grid grid-cols-2 gap-4 mb-4">
+              <div>
+                <label class="block text-xs font-bold uppercase tracking-wider text-gray-400 mb-1.5">Empresa *</label>
+                <input type="text" name="empresa" placeholder="Tu empresa" required class="form-input w-full border border-gray-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-primary/40 focus:border-primary bg-gray-50"/>
+              </div>
+              <div>
+                <label class="block text-xs font-bold uppercase tracking-wider text-gray-400 mb-1.5">Nombre *</label>
+                <input type="text" name="nombre" placeholder="Tu nombre" required class="form-input w-full border border-gray-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-primary/40 focus:border-primary bg-gray-50"/>
+              </div>
+            </div>
+            <div class="mb-4">
+              <label class="block text-xs font-bold uppercase tracking-wider text-gray-400 mb-1.5">Email *</label>
+              <input type="email" name="email" placeholder="correo@empresa.com" required class="form-input w-full border border-gray-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-primary/40 focus:border-primary bg-gray-50"/>
+            </div>
+            <div class="mb-4">
+              <label class="block text-xs font-bold uppercase tracking-wider text-gray-400 mb-1.5">Servicio de interés *</label>
+              <select name="servicio" required class="form-input w-full border border-gray-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-primary/40 focus:border-primary bg-gray-50 text-gray-600">
+                <option value="">Seleccioná un servicio</option>
+                <option>Reclutamiento y Selección</option>
+                <option>Outsourcing de Personal</option>
+                <option>Evaluación de Competencias</option>
+                <option>No estoy seguro aún</option>
+              </select>
+            </div>
+            <div class="mb-5">
+              <label class="block text-xs font-bold uppercase tracking-wider text-gray-400 mb-1.5">Mensaje (opcional)</label>
+              <textarea name="mensaje" rows="3" placeholder="Contanos brevemente qué necesitás..." class="form-input w-full border border-gray-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-primary/40 focus:border-primary bg-gray-50 resize-none"></textarea>
+            </div>
+            <button type="submit" class="btn-submit w-full bg-darkalt hover:bg-dark text-white py-4 rounded-xl font-bold text-sm tracking-wide">
+              Solicitar consulta gratuita →
+            </button>
+            <p class="text-center text-xs text-gray-400 mt-3">Sin compromiso · Respondemos en &lt;24hs hábiles</p>
+          </form>
+        </div>
+        <div id="ctaFormOk" class="hidden bg-white rounded-2xl shadow-lg border border-gray-100 p-12 text-center">
+          <div class="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-5">
+            <svg class="w-8 h-8 text-green-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+          </div>
+          <h3 class="text-2xl font-extrabold text-gray-900 mb-3">¡Consulta recibida!</h3>
+          <p class="text-gray-500 font-light">Un especialista de Recluta UY te va a contactar en las próximas 24 horas hábiles.</p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="bg-dark text-gray-300 py-10">
+  <div class="container mx-auto px-6 grid md:grid-cols-3 gap-8 items-start">
+    <div>
+      <img src="https://d2xsxph8kpxj0f.cloudfront.net/310519663412657124/DRFgXDJSgT4odHDqY8umud/recluta-logo_f8985dca.png" alt="Recluta" class="h-7 mb-4 brightness-0 invert opacity-80"/>
+      <p class="text-gray-400 text-sm font-light leading-relaxed max-w-xs">Tu socio estratégico en reclutamiento y outsourcing. Conectamos empresas con talento de calidad.</p>
+    </div>
+    <div>
+      <h4 class="text-xs font-bold uppercase tracking-widest text-primary mb-4">Servicios</h4>
+      <div class="flex flex-col gap-2">
+        <a href="#servicios" class="ft-link text-sm text-gray-400">Reclutamiento y Selección</a>
+        <a href="#servicios" class="ft-link text-sm text-gray-400">Outsourcing de Personal</a>
+        <a href="#servicios" class="ft-link text-sm text-gray-400">Evaluación de Competencias</a>
+      </div>
+    </div>
+    <div>
+      <h4 class="text-xs font-bold uppercase tracking-widest text-primary mb-4">Contacto</h4>
+      <div class="flex flex-col gap-2">
+        <span class="text-sm text-gray-400">Montevideo, Uruguay</span>
+        <a href="mailto:info@recluta.uy" class="ft-link text-sm text-gray-400">info@recluta.uy</a>
+        <a href="tel:099807971" class="ft-link text-sm text-gray-400">099 807 971</a>
+      </div>
+    </div>
+  </div>
+  <div class="container mx-auto px-6 mt-8 pt-6 border-t border-white/5 flex items-center justify-between">
+    <p class="text-gray-500 text-xs">© <span id="year"></span> Recluta UY. Todos los derechos reservados.</p>
+    <div class="flex gap-4">
+      <a href="#" class="text-gray-500 hover:text-primary transition-colors text-xs">LinkedIn</a>
+      <a href="#" class="text-gray-500 hover:text-primary transition-colors text-xs">Instagram</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+// AÑO
+document.getElementById('year').textContent = new Date().getFullYear();
+
+// CURSOR
+const cur = document.getElementById('cur');
+const ring = document.getElementById('cur-ring');
+let mx=0, my=0, rx=0, ry=0;
+document.addEventListener('mousemove', e => { mx=e.clientX; my=e.clientY; cur.style.left=mx+'px'; cur.style.top=my+'px'; });
+(function anim(){ rx+=(mx-rx)*.1; ry+=(my-ry)*.1; ring.style.left=rx+'px'; ring.style.top=ry+'px'; requestAnimationFrame(anim); })();
+document.querySelectorAll('a,button,.svc-card').forEach(el => {
+  el.addEventListener('mouseenter', () => { cur.style.width='18px'; cur.style.height='18px'; cur.style.background='#005A62'; ring.style.width='52px'; ring.style.height='52px'; });
+  el.addEventListener('mouseleave', () => { cur.style.width='10px'; cur.style.height='10px'; cur.style.background='#AF9DEA'; ring.style.width='38px'; ring.style.height='38px'; });
+});
+
+// SCROLL REVEAL
+const io = new IntersectionObserver(entries => {
+  entries.forEach(e => { if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } });
+}, { threshold: 0.12 });
+document.querySelectorAll('.sr').forEach(el => io.observe(el));
+
+// PROCESO STEPS CASCADE
+const steps = document.querySelectorAll('.proc-step');
+const io2 = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if(e.isIntersecting){
+      steps.forEach((s,i) => setTimeout(() => s.classList.add('in'), i*120));
+      io2.disconnect();
+    }
+  });
+}, { threshold: 0.2 });
+if(steps.length) io2.observe(document.getElementById('procSteps'));
+
+// SCROLL TOP
+window.addEventListener('scroll', () => {
+  document.getElementById('scrollTop').classList.toggle('show', window.scrollY > 400);
+  document.querySelector('header').style.boxShadow = window.scrollY > 30 ? '0 4px 24px rgba(0,0,0,.08)' : '';
+});
+
+// PARTÍCULAS
+const pc = document.getElementById('particles');
+for(let i=0; i<16; i++){
+  const p = document.createElement('div');
+  p.className = 'particle';
+  const size = Math.random()*4+2;
+  const colors = ['rgba(175,157,234,.5)','rgba(0,90,98,.6)','rgba(255,255,255,.2)'];
+  p.style.cssText = `width:${size}px;height:${size}px;left:${Math.random()*100}%;top:${Math.random()*100}%;background:${colors[Math.floor(Math.random()*3)]};animation-duration:${Math.random()*8+6}s;animation-delay:-${Math.random()*6}s`;
+  pc.appendChild(p);
+}
+
+// CONTADORES
+function animCounter(el, target, dur=1800){
+  let start=null;
+  const step=ts=>{
+    if(!start) start=ts;
+    const prog = Math.min((ts-start)/dur,1);
+    const ease = 1-Math.pow(1-prog,3);
+    el.textContent = Math.floor(ease*target).toLocaleString('es');
+    if(prog<1) requestAnimationFrame(step);
+    else el.textContent = target.toLocaleString('es')+(target>=1000?'+':target===98?'%':'+');
+  };
+  requestAnimationFrame(step);
+}
+const cio = new IntersectionObserver(entries=>{
+  entries.forEach(e=>{
+    if(e.isIntersecting){
+      document.querySelectorAll('.counter').forEach(el=>animCounter(el,parseInt(el.dataset.target)));
+      document.querySelectorAll('.progress-fill').forEach(el=>{ setTimeout(()=>{ el.style.width=el.dataset.width; },200); });
+      cio.disconnect();
+    }
+  });
+},{threshold:.5});
+const fc = document.querySelector('.counter');
+if(fc) cio.observe(fc.closest('section')||fc);
+
+// FORM HERO
+document.getElementById('heroForm').addEventListener('submit', function(e){
+  e.preventDefault();
+  const btn = this.querySelector('button[type=submit]');
+  btn.textContent='Enviando...'; btn.disabled=true;
+  fetch('/',{method:'POST',body:new FormData(this)})
+    .then(()=>{ document.getElementById('heroFormWrap').classList.add('hidden'); document.getElementById('heroFormOk').classList.remove('hidden'); })
+    .catch(()=>{ document.getElementById('heroFormWrap').classList.add('hidden'); document.getElementById('heroFormOk').classList.remove('hidden'); });
+});
+
+// FORM CTA
+document.getElementById('ctaForm').addEventListener('submit', function(e){
+  e.preventDefault();
+  const btn = this.querySelector('button[type=submit]');
+  btn.textContent='Enviando...'; btn.disabled=true;
+  const wrap = document.getElementById('ctaFormWrap');
+  fetch('/',{method:'POST',body:new FormData(this)})
+    .then(()=>mostrarCtaOk()).catch(()=>mostrarCtaOk());
+});
+
+function mostrarCtaOk(){
+  const wrap = document.getElementById('ctaFormWrap');
+  wrap.style.opacity='0'; wrap.style.transform='scale(.97)'; wrap.style.transition='all .3s ease';
+  setTimeout(()=>{
+    wrap.classList.add('hidden');
+    const s = document.getElementById('ctaFormOk');
+    s.classList.remove('hidden');
+    s.style.opacity='0'; s.style.transform='scale(.97)'; s.style.transition='all .4s ease';
+    setTimeout(()=>{ s.style.opacity='1'; s.style.transform='scale(1)'; },20);
+  },300);
+}
+</script>
+</body>
+</html>
